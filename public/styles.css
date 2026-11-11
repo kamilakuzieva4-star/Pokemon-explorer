@@ -1,0 +1,18 @@
+:root {
+  font-family: system-ui, sans-serif;
+  color: #35443b;
+  background: #faf9f6;
+  line-height: 1.6;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+main, footer { width: min(640px, calc(100% - 40px)); margin-inline: auto; }
+main { padding-block: clamp(44px, 9vw, 88px) 36px; }
+.welcome { color: #526c58; font-size: 1rem; margin: 0 0 12px; }
+h1 { font-size: clamp(1.9rem, 6vw, 2.5rem); font-weight: 600; line-height: 1.2; margin: 0 0 16px; overflow-wrap: anywhere; }
+.intro { font-size: 1.05rem; max-width: 420px; margin: 0; }
+section { margin-top: 40px; max-width: 440px; }
+h2 { font-size: 1rem; font-weight: 600; margin: 0 0 8px; }
+section p { margin: 0; color: #5d675f; }
+footer { padding-block: 20px; color: #5d675f; font-size: .85rem; }
