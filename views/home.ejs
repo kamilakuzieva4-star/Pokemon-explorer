@@ -1,22 +1,38 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A growing project for exploring and comparing Pokémon.">
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/styles.css">
-</head>
-<body>
-  <main>
-    <p class="welcome">Hi, trainer!</p>
-    <h1><%= title %></h1>
-    <p class="intro">A little place to discover your favorite Pokémon.</p>
-    <section aria-labelledby="next-title">
-      <h2 id="next-title">Coming soon</h2>
-      <p>Browse Pokémon, look up a favorite and compare two side by side.</p>
-    </section>
-  </main>
-  <footer>Pokémon Explorer · A learning project</footer>
-</body>
-</html>
+<%- include("partials/header") %>
+
+<h1>Explore Pokémon</h1>
+
+<section class="catalog" aria-labelledby="catalog-title">
+  <h2 id="catalog-title">Pokémon catalog</h2>
+
+  <% if (pokemon.length === 0) { %>
+    <p>No Pokémon are available on this page.</p>
+  <% } else { %>
+    <div class="cards">
+      <% for (const entry of pokemon) { %>
+        <article class="card">
+          <div class="picture">
+            <% if (entry.image) { %>
+              <img
+                src="<%= entry.image %>"
+                alt="<%= entry.label %>"
+                width="144"
+                height="144"
+              >
+            <% } else { %>
+              <span>Image unavailable</span>
+            <% } %>
+          </div>
+
+          <div class="card-text">
+            <span class="number">#<%= entry.number %></span>
+            <h3 class="pokemon-name"><%= entry.label %></h3>
+            <p class="type"><%= entry.types || "Unknown type" %></p>
+          </div>
+        </article>
+      <% } %>
+    </div>
+  <% } %>
+</section>
+
+<%- include("partials/footer") %>

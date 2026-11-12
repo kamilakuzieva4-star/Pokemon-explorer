@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore Pokémon and their types.">
+  <title><%= title %> | Pokémon Explorer</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="wrapper navigation" aria-label="Main navigation">
+      <a class="brand" href="/">Pokémon Explorer</a>
+
+      <a href="/" <% if (title === "Catalog") { %>aria-current="page"<% } %>>
+        Catalog
+      </a>
+    </nav>
+  </header>
+
+  <main id="main" class="wrapper" tabindex="-1">

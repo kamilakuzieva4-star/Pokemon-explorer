@@ -1,18 +1,170 @@
 :root {
   font-family: system-ui, sans-serif;
-  color: #35443b;
+  color: #334139;
   background: #faf9f6;
   line-height: 1.6;
 }
 
 * { box-sizing: border-box; }
 body { margin: 0; }
-main, footer { width: min(640px, calc(100% - 40px)); margin-inline: auto; }
-main { padding-block: clamp(44px, 9vw, 88px) 36px; }
-.welcome { color: #526c58; font-size: 1rem; margin: 0 0 12px; }
-h1 { font-size: clamp(1.9rem, 6vw, 2.5rem); font-weight: 600; line-height: 1.2; margin: 0 0 16px; overflow-wrap: anywhere; }
-.intro { font-size: 1.05rem; max-width: 420px; margin: 0; }
-section { margin-top: 40px; max-width: 440px; }
-h2 { font-size: 1rem; font-weight: 600; margin: 0 0 8px; }
-section p { margin: 0; color: #5d675f; }
-footer { padding-block: 20px; color: #5d675f; font-size: .85rem; }
+h1, h2, h3, p { margin: 0; }
+
+a {
+  color: #3e5c40;
+  text-underline-offset: 4px;
+}
+
+a:focus-visible {
+  outline: 3px solid #627d42;
+  outline-offset: 4px;
+}
+
+.wrapper {
+  width: min(1000px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+.skip-link {
+  position: absolute;
+  top: -80px;
+  left: 16px;
+  padding: 10px;
+  background: #fff;
+}
+
+.skip-link:focus { top: 8px; }
+
+.site-header {
+  border-bottom: 1px solid #dce0d6;
+}
+
+.navigation {
+  min-height: 76px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 16px;
+}
+
+.brand {
+  color: inherit;
+  font-size: 1.15rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.navigation a[aria-current="page"] {
+  text-underline-offset: 7px;
+}
+
+main {
+  padding-block: 36px 44px;
+  min-height: 72vh;
+}
+
+h1 {
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -.035em;
+}
+
+h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.catalog { margin-top: 32px; }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: #fffefa;
+  border: 1px solid #dce0d6;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.picture {
+  display: grid;
+  place-items: center;
+  min-height: 168px;
+  padding: 12px;
+  margin: 8px 8px 0;
+  border-radius: 8px;
+  background: #eef1e8;
+}
+
+.picture img {
+  display: block;
+  width: min(100%, 144px);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+.picture span {
+  color: #626b61;
+  font-size: .8rem;
+}
+
+.card-text { padding: 10px 14px 16px; }
+
+.number {
+  color: #626b61;
+  font-size: .8rem;
+}
+
+.pokemon-name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-block: 2px;
+  text-transform: capitalize;
+  overflow-wrap: anywhere;
+}
+
+.type {
+  color: #626b61;
+  font-size: .88rem;
+  text-transform: capitalize;
+}
+
+.site-footer {
+  border-top: 1px solid #dce0d6;
+  color: #626b61;
+  padding-block: 24px;
+  font-size: .85rem;
+}
+
+.error-page { max-width: 600px; }
+.error-page p { margin-block: 12px 20px; }
+
+@media (max-width: 800px) {
+  .cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .wrapper { width: calc(100% - 32px); }
+
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .picture { min-height: 125px; }
+}
+
+@media (max-width: 350px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
