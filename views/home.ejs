@@ -1,38 +1,31 @@
 <%- include("partials/header") %>
-
 <h1>Explore Pokémon</h1>
-
+<%- include("partials/search-form", { value: "", message: "" }) %>
 <section class="catalog" aria-labelledby="catalog-title">
   <h2 id="catalog-title">Pokémon catalog</h2>
-
   <% if (pokemon.length === 0) { %>
     <p>No Pokémon are available on this page.</p>
   <% } else { %>
     <div class="cards">
       <% for (const entry of pokemon) { %>
         <article class="card">
+          <a class="card-link" href="/pokemon/<%= entry.name %>">
           <div class="picture">
             <% if (entry.image) { %>
-              <img
-                src="<%= entry.image %>"
-                alt="<%= entry.label %>"
-                width="144"
-                height="144"
-              >
+              <img src="<%= entry.image %>" alt="<%= entry.label %>" width="144" height="144">
             <% } else { %>
               <span>Image unavailable</span>
             <% } %>
           </div>
-
           <div class="card-text">
             <span class="number">#<%= entry.number %></span>
             <h3 class="pokemon-name"><%= entry.label %></h3>
             <p class="type"><%= entry.types || "Unknown type" %></p>
           </div>
+          </a>
         </article>
       <% } %>
     </div>
   <% } %>
 </section>
-
 <%- include("partials/footer") %>

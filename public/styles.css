@@ -4,167 +4,74 @@
   background: #faf9f6;
   line-height: 1.6;
 }
-
 * { box-sizing: border-box; }
 body { margin: 0; }
 h1, h2, h3, p { margin: 0; }
-
-a {
-  color: #3e5c40;
-  text-underline-offset: 4px;
-}
-
-a:focus-visible {
-  outline: 3px solid #627d42;
-  outline-offset: 4px;
-}
-
-.wrapper {
-  width: min(1000px, calc(100% - 40px));
-  margin-inline: auto;
-}
-
-.skip-link {
-  position: absolute;
-  top: -80px;
-  left: 16px;
-  padding: 10px;
-  background: #fff;
-}
-
+a { color: #3e5c40; text-underline-offset: 4px; }
+a:focus-visible { outline: 3px solid #627d42; outline-offset: 4px; }
+.wrapper { width: min(1000px, calc(100% - 40px)); margin-inline: auto; }
+.skip-link { position: absolute; top: -80px; left: 16px; padding: 10px; background: #fff; }
 .skip-link:focus { top: 8px; }
-
-.site-header {
-  border-bottom: 1px solid #dce0d6;
-}
-
-.navigation {
-  min-height: 76px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding-block: 16px;
-}
-
-.brand {
-  color: inherit;
-  font-size: 1.15rem;
-  font-weight: 650;
-  text-decoration: none;
-}
-
-.navigation a[aria-current="page"] {
-  text-underline-offset: 7px;
-}
-
-main {
-  padding-block: 36px 44px;
-  min-height: 72vh;
-}
-
-h1 {
-  font-size: clamp(1.9rem, 4vw, 2.6rem);
-  line-height: 1.2;
-  font-weight: 600;
-  letter-spacing: -.035em;
-}
-
-h2 {
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
+.site-header { border-bottom: 1px solid #dce0d6; }
+.navigation { min-height: 76px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding-block: 16px; }
+.brand { color: inherit; font-size: 1.15rem; font-weight: 650; text-decoration: none; }
+.navigation a[aria-current="page"] { text-underline-offset: 7px; }
+main { padding-block: 36px 44px; min-height: 72vh; }
+h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); line-height: 1.2; font-weight: 600; letter-spacing: -.035em; }
+h2 { font-size: 1.3rem; font-weight: 600; margin-bottom: 20px; }
 .catalog { margin-top: 32px; }
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.card {
-  background: #fffefa;
-  border: 1px solid #dce0d6;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.picture {
-  display: grid;
-  place-items: center;
-  min-height: 168px;
-  padding: 12px;
-  margin: 8px 8px 0;
-  border-radius: 8px;
-  background: #eef1e8;
-}
-
-.picture img {
-  display: block;
-  width: min(100%, 144px);
-  height: auto;
-  aspect-ratio: 1;
-  object-fit: contain;
-}
-
-.picture span {
-  color: #626b61;
-  font-size: .8rem;
-}
-
+.cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.card { background: #fffefa; border: 1px solid #dce0d6; border-radius: 10px; overflow: hidden; }
+.picture { display: grid; place-items: center; min-height: 168px; padding: 12px; margin: 8px 8px 0; border-radius: 8px; background: #eef1e8; }
+.picture img { display: block; width: min(100%, 144px); height: auto; aspect-ratio: 1; object-fit: contain; }
+.picture span { color: #626b61; font-size: .8rem; }
 .card-text { padding: 10px 14px 16px; }
-
-.number {
-  color: #626b61;
-  font-size: .8rem;
-}
-
-.pokemon-name {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-block: 2px;
-  text-transform: capitalize;
-  overflow-wrap: anywhere;
-}
-
-.type {
-  color: #626b61;
-  font-size: .88rem;
-  text-transform: capitalize;
-}
-
-.site-footer {
-  border-top: 1px solid #dce0d6;
-  color: #626b61;
-  padding-block: 24px;
-  font-size: .85rem;
-}
-
+.number { color: #626b61; font-size: .8rem; }
+.pokemon-name { font-size: 1rem; font-weight: 600; margin-block: 2px; text-transform: capitalize; overflow-wrap: anywhere; }
+.type { color: #626b61; font-size: .88rem; text-transform: capitalize; }
+.site-footer { border-top: 1px solid #dce0d6; color: #626b61; padding-block: 24px; font-size: .85rem; }
 .error-page { max-width: 600px; }
 .error-page p { margin-block: 12px 20px; }
-
 @media (max-width: 800px) {
-  .cards {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+  .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
-
 @media (max-width: 600px) {
   .wrapper { width: calc(100% - 32px); }
-
-  .cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .picture { min-height: 125px; }
 }
-
 @media (max-width: 350px) {
-  .cards {
-    grid-template-columns: 1fr;
-  }
+  .cards { grid-template-columns: 1fr; }
+}
+
+/* Search and Pokémon details */
+.card-link { display: block; height: 100%; color: inherit; text-decoration: none; }
+.card-link:hover .pokemon-name { text-decoration: underline; }
+.card-link:focus-visible { outline-offset: -4px; border-radius: 10px; }
+.search-form { margin-block: 24px; max-width: 560px; }
+.search-form label { display: block; margin-bottom: 6px; font-weight: 600; }
+.search-row { display: flex; gap: 10px; }
+.search-row input {
+  flex: 1; min-width: 0; padding: 11px 12px; border: 1px solid #959f8f;
+  border-radius: 8px; background: #fffefa; color: inherit; font: inherit;
+}
+.search-row button {
+  padding: 11px 20px; border: 0; border-radius: 8px; background: #3e5c40;
+  color: white; font: inherit; cursor: pointer;
+}
+.search-row button:hover { background: #304a32; }
+input:focus-visible, button:focus-visible { outline: 3px solid #627d42; outline-offset: 3px; }
+.form-error { margin-top: 8px; color: #963d34; }
+.detail { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 24px; align-items: center; }
+.detail-picture { margin: 0; min-height: 320px; }
+.detail-picture img { width: min(100%, 280px); }
+.detail-name { text-transform: capitalize; overflow-wrap: anywhere; margin-block: 6px 10px; }
+.facts { margin: 24px 0 0; }
+.facts div { display: flex; justify-content: space-between; gap: 16px; padding-block: 9px; border-bottom: 1px solid #dce0d6; }
+.facts dt { color: #626b61; }
+.facts dd { margin: 0; font-weight: 600; }
+@media (max-width: 600px) {
+  .detail { grid-template-columns: 1fr; gap: 20px; }
+  .detail-picture { min-height: 240px; }
+  .search-row button { padding-inline: 14px; }
 }

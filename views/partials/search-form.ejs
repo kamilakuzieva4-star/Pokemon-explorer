@@ -1,0 +1,12 @@
+<form class="search-form" action="/search" method="post">
+  <label for="pokemon-name">Name or number</label>
+  <div class="search-row">
+    <input id="pokemon-name" name="name" type="search" maxlength="60" required
+      placeholder="e.g. Pikachu or 25" value="<%= value %>"
+      <% if (message) { %>aria-invalid="true" aria-describedby="search-error"<% } %>>
+    <button type="submit">Search</button>
+  </div>
+  <% if (message) { %>
+    <p id="search-error" class="form-error" role="alert"><%= message %></p>
+  <% } %>
+</form>

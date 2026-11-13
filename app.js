@@ -10,16 +10,14 @@ const projectDirectory = path.dirname(fileURLToPath(import.meta.url));
 
 app.set("view engine", "ejs");
 app.set("views", path.join(projectDirectory, "views"));
-
 app.use(express.static(path.join(projectDirectory, "public")));
+app.use(express.urlencoded({ extended: false, limit: "2kb" }));
 app.use(pokemonRoutes);
 
 
 app.use((req, res) => {
   res.status(404).render("error", {
-    title: "Not found",
-    status: 404,
-    message: "This page does not exist."
+    title: "Not found", status: 404, message: "This page does not exist."
   });
 });
 
