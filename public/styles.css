@@ -44,7 +44,7 @@ h2 { font-size: 1.3rem; font-weight: 600; margin-bottom: 20px; }
   .cards { grid-template-columns: 1fr; }
 }
 
-/* Search and Pokémon details */
+
 .card-link { display: block; height: 100%; color: inherit; text-decoration: none; }
 .card-link:hover .pokemon-name { text-decoration: underline; }
 .card-link:focus-visible { outline-offset: -4px; border-radius: 10px; }
@@ -75,3 +75,19 @@ input:focus-visible, button:focus-visible { outline: 3px solid #627d42; outline-
   .detail-picture { min-height: 240px; }
   .search-row button { padding-inline: 14px; }
 }
+
+
+.catalog-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+.catalog-toolbar h2 { margin: 0; }
+.sort-form { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: .9rem; }
+.sort-form select, .sort-form button {
+  padding: 9px 12px; border: 1px solid #959f8f; border-radius: 8px;
+  color: inherit; background: #fffefa; font: inherit;
+}
+.sort-form button { cursor: pointer; }
+.sort-form button:hover { background: #eef1e8; }
+select:focus-visible { outline: 3px solid #627d42; outline-offset: 3px; }
+.pagination { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; margin-top: 28px; font-size: .9rem; }
+.pagination a, .pagination .disabled { padding: 10px 12px; border: 1px solid #dce0d6; border-radius: 8px; }
+.pagination a { background: #fffefa; }
+.pagination .disabled { color: #737b70; }

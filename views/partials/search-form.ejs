@@ -1,4 +1,6 @@
 <form class="search-form" action="/search" method="post">
+  <input type="hidden" name="page" value="<%= page %>">
+  <input type="hidden" name="sort" value="<%= sort %>">
   <label for="pokemon-name">Name or number</label>
   <div class="search-row">
     <input id="pokemon-name" name="name" type="search" maxlength="60" required

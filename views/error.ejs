@@ -1,10 +1,8 @@
 <%- include("partials/header") %>
-
 <section class="error-page">
   <p class="number">Error <%= status %></p>
   <h1><%= title %></h1>
   <p><%= message %></p>
-  <a href="/">Back to catalog</a>
+  <a href="<%= typeof backUrl === "string" ? backUrl : "/" %>">Back to catalog</a>
 </section>
-
 <%- include("partials/footer") %>

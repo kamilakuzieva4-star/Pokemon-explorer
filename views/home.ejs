@@ -2,14 +2,25 @@
 <h1>Explore Pokémon</h1>
 <%- include("partials/search-form", { value: "", message: "" }) %>
 <section class="catalog" aria-labelledby="catalog-title">
-  <h2 id="catalog-title">Pokémon catalog</h2>
+  <div class="catalog-toolbar">
+    <h2 id="catalog-title">Pokémon catalog</h2>
+    <form class="sort-form" action="/" method="get">
+      <input type="hidden" name="page" value="<%= page %>">
+      <label for="sort">Sort this page</label>
+      <select id="sort" name="sort">
+        <option value="number" <%= sort === "number" ? "selected" : "" %>>Number</option>
+        <option value="name" <%= sort === "name" ? "selected" : "" %>>Name A–Z</option>
+      </select>
+      <button type="submit">Apply</button>
+    </form>
+  </div>
   <% if (pokemon.length === 0) { %>
     <p>No Pokémon are available on this page.</p>
   <% } else { %>
     <div class="cards">
       <% for (const entry of pokemon) { %>
         <article class="card">
-          <a class="card-link" href="/pokemon/<%= entry.name %>">
+          <a class="card-link" href="/pokemon/<%= entry.name %>?<%= catalogQuery %>">
           <div class="picture">
             <% if (entry.image) { %>
               <img src="<%= entry.image %>" alt="<%= entry.label %>" width="144" height="144">
@@ -27,5 +38,18 @@
       <% } %>
     </div>
   <% } %>
+  <nav class="pagination" aria-label="Catalog pages">
+    <% if (page > 1) { %>
+      <a href="/?page=<%= page - 1 %>&amp;sort=<%= sort %>" rel="prev">Previous</a>
+    <% } else { %>
+      <span class="disabled">Previous</span>
+    <% } %>
+    <span>Page <%= page %> of <%= totalPages %></span>
+    <% if (hasNext) { %>
+      <a href="/?page=<%= page + 1 %>&amp;sort=<%= sort %>" rel="next">Next</a>
+    <% } else { %>
+      <span class="disabled">Next</span>
+    <% } %>
+  </nav>
 </section>
 <%- include("partials/footer") %>

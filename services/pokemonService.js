@@ -4,8 +4,8 @@ const api = axios.create({ baseURL: "https://pokeapi.co/api/v2", timeout: 6500 }
 const validName = (name) =>
   typeof name === "string" && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(name);
 
-let savedPage = null;
-let expiresAt = 0;
+const pageSize = 12;
+const pages = new Map();
 
 export async function getPokemon(name) {
   if (!validName(name)) throw new Error("Invalid Pokémon identifier.");
@@ -57,12 +57,37 @@ export async function getPokemon(name) {
   };
 }
 
-export async function getCatalog() {
-  if (savedPage && Date.now() < expiresAt) return savedPage;
-  const { data: list } = await api.get("/pokemon?limit=12&offset=0");
-  if (!Array.isArray(list?.results)) throw new Error("Unexpected catalog response.");
+export async function getCatalog(page = 1) {
+  if (!Number.isInteger(page) || page < 1 || page > 9999) {
+    throw new Error("Invalid catalog page.");
+  }
+  const saved = pages.get(page);
+  if (saved && Date.now() < saved.expiresAt) return saved.data;
+  pages.delete(page);
+
+  const offset = (page - 1) * pageSize;
+  const { data: list } = await api.get(`/pokemon?limit=${pageSize}&offset=${offset}`);
+  if (!Number.isInteger(list?.count) || list.count < 0 || !Array.isArray(list.results)) {
+    throw new Error("Unexpected catalog response.");
+  }
+  if (page > 1 && offset >= list.count) {
+    const error = new Error("There is no catalog page with that number.");
+    error.status = 404;
+    error.publicMessage = error.message;
+    throw error;
+  }
+  if (list.results.length !== Math.min(pageSize, list.count - offset)) {
+    throw new Error("Incomplete catalog response.");
+  }
   const pokemon = await Promise.all(list.results.map((entry) => getPokemon(entry?.name)));
-  savedPage = pokemon;
-  expiresAt = Date.now() + 20 * 60 * 1000;
-  return pokemon;
+  const data = {
+    pokemon,
+    total: list.count,
+    totalPages: Math.max(1, Math.ceil(list.count / pageSize)),
+    hasNext: offset + pageSize < list.count
+  };
+  // Keep a bounded cache of visited catalog pages for 20 minutes.
+  if (pages.size >= 30) pages.delete(pages.keys().next().value);
+  pages.set(page, { data, expiresAt: Date.now() + 20 * 60 * 1000 });
+  return data;
 }
