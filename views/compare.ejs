@@ -1,0 +1,62 @@
+<%- include("partials/header") %>
+
+<a href="<%= backUrl %>">Back to catalog</a>
+<h1 class="compare-title">Compare Pokémon</h1>
+<p>Choose two Pokémon to compare their types and base stats.</p>
+
+<form class="compare-form" action="/compare" method="get"
+  <% if (message) { %>aria-describedby="compare-error"<% } %>>
+  <input type="hidden" name="submitted" value="1">
+  <input type="hidden" name="page" value="<%= page %>">
+  <input type="hidden" name="sort" value="<%= sort %>">
+  <div>
+    <label for="first">First Pokémon</label>
+    <input id="first" name="first" value="<%= first %>" placeholder="e.g. Pikachu or 25" required maxlength="60">
+  </div>
+  <div>
+    <label for="second">Second Pokémon</label>
+    <input id="second" name="second" value="<%= second %>" placeholder="e.g. Eevee or 133" required maxlength="60">
+  </div>
+  <button type="submit">Compare</button>
+</form>
+
+<% if (message) { %>
+  <p id="compare-error" class="form-error" role="alert"><%= message %></p>
+<% } else if (pair.length === 0) { %>
+  <p><a href="/compare?first=pikachu&amp;second=eevee&amp;<%= catalogQuery %>">Try Pikachu and Eevee</a></p>
+<% } %>
+
+<% if (pair.length === 2) { %>
+  <div class="comparison" role="region" aria-label="Pokémon comparison table" tabindex="0">
+    <table>
+      <caption>Type and base stats</caption>
+      <colgroup><col class="stat-column"><col><col></colgroup>
+      <thead>
+        <tr>
+          <th scope="col">Stat</th>
+          <% for (const pokemon of pair) { %>
+            <th scope="col">
+              <div class="picture">
+                <% if (pokemon.image) { %>
+                  <img src="<%= pokemon.image %>" alt="<%= pokemon.label %>" width="144" height="144">
+                <% } else { %>
+                  <span>Image unavailable</span>
+                <% } %>
+              </div>
+              <p class="number">#<%= pokemon.number %></p>
+              <a class="pokemon-name" href="/pokemon/<%= pokemon.name %>?<%= catalogQuery %>"><%= pokemon.label %></a>
+            </th>
+          <% } %>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Type</th><% for (const pokemon of pair) { %><td class="type"><%= pokemon.types || "Unknown" %></td><% } %></tr>
+        <tr><th scope="row">HP</th><% for (const pokemon of pair) { %><td><%= pokemon.hp ?? "Unknown" %></td><% } %></tr>
+        <tr><th scope="row">Attack</th><% for (const pokemon of pair) { %><td><%= pokemon.attack ?? "Unknown" %></td><% } %></tr>
+        <tr><th scope="row">Speed</th><% for (const pokemon of pair) { %><td><%= pokemon.speed ?? "Unknown" %></td><% } %></tr>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+
+<%- include("partials/footer") %>

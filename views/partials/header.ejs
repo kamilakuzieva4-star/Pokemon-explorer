@@ -9,15 +9,13 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-
   <header class="site-header">
     <nav class="wrapper navigation" aria-label="Main navigation">
       <a class="brand" href="/">Pokémon Explorer</a>
-
-      <a href="/" <% if (title === "Catalog") { %>aria-current="page"<% } %>>
-        Catalog
-      </a>
+      <div class="nav-links">
+        <a href="<%= typeof backUrl === 'string' ? backUrl : '/' %>" <% if (title === "Catalog") { %>aria-current="page"<% } %>>Catalog</a>
+        <a href="/compare?<%= typeof catalogQuery === 'string' ? catalogQuery : 'page=1&sort=number' %>" <% if (title === "Compare") { %>aria-current="page"<% } %>>Compare</a>
+      </div>
     </nav>
   </header>
-
   <main id="main" class="wrapper" tabindex="-1">

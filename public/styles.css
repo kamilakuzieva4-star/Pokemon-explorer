@@ -91,3 +91,35 @@ select:focus-visible { outline: 3px solid #627d42; outline-offset: 3px; }
 .pagination a, .pagination .disabled { padding: 10px 12px; border: 1px solid #dce0d6; border-radius: 8px; }
 .pagination a { background: #fffefa; }
 .pagination .disabled { color: #737b70; }
+
+
+.nav-links { display: flex; gap: 20px; align-items: center; }
+.detail-action { margin-top: 20px; }
+.compare-title { margin-block: 18px 12px; }
+.compare-form { display: flex; flex-wrap: wrap; align-items: end; gap: 16px; margin-block: 24px 16px; }
+.compare-form > div { flex: 1 1 220px; min-width: 0; }
+.compare-form label { display: block; margin-bottom: 6px; font-weight: 600; }
+.compare-form input {
+  width: 100%; padding: 11px 12px; border: 1px solid #959f8f; border-radius: 8px;
+  background: #fffefa; color: inherit; font: inherit;
+}
+.compare-form button {
+  padding: 12px 24px; border: 0; border-radius: 8px; background: #3e5c40;
+  color: white; font: inherit; cursor: pointer;
+}
+.compare-form button:hover { background: #304a32; }
+.comparison { margin-top: 28px; overflow-x: auto; }
+.comparison:focus-visible { outline: 3px solid #627d42; outline-offset: 3px; }
+.comparison table { width: 100%; border-collapse: collapse; table-layout: fixed; background: #fffefa; }
+.comparison caption { text-align: left; font-weight: 600; padding-bottom: 12px; }
+.comparison .stat-column { width: 22%; }
+.comparison th, .comparison td { padding: 14px; border-bottom: 1px solid #dce0d6; text-align: center; overflow-wrap: anywhere; }
+.comparison th:first-child { text-align: left; }
+.comparison .picture { min-height: 168px; margin: 0 0 10px; }
+.comparison .number { margin-bottom: 4px; font-weight: 400; }
+@media (max-width: 600px) {
+  .compare-form { gap: 12px; }
+  .compare-form button { width: 100%; }
+  .comparison th, .comparison td { padding: 8px; }
+  .comparison .picture { min-height: 100px; padding: 6px; }
+}

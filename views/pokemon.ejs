@@ -20,6 +20,9 @@
       <div><dt>Attack</dt><dd><%= pokemon.attack ?? "Unknown" %></dd></div>
       <div><dt>Speed</dt><dd><%= pokemon.speed ?? "Unknown" %></dd></div>
     </dl>
+    <p class="detail-action">
+      <a href="/compare?first=<%= pokemon.name %>&amp;<%= catalogQuery %>">Compare this Pokémon</a>
+    </p>
   </div>
 </article>
 

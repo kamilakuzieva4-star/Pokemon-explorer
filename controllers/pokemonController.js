@@ -21,7 +21,7 @@ function lookupError(error) {
   return { status: 502, message: "Pokémon data could not load. Please try again in a moment." };
 }
 
-// Only validated page and sort values are used to build local links.
+
 function readContext(source = {}) {
   const page = source.page ?? "1";
   const sort = source.sort ?? "number";
@@ -95,5 +95,47 @@ export async function details(req, res) {
     res.render("pokemon", { title: pokemon.label, ...context, pokemon });
   } catch (error) {
     renderError(res, error, context);
+  }
+}
+
+export async function compare(req, res) {
+  let context;
+  const first = typeof req.query.first === "string" ? req.query.first.slice(0, 60) : "";
+  const second = typeof req.query.second === "string" ? req.query.second.slice(0, 60) : "";
+
+  const showForm = (status, message = "", pair = []) => res.status(status).render("compare", {
+    title: "Compare", ...context, first, second, message, pair
+  });
+
+  try {
+    context = readContext(req.query);
+   
+    const prefill = req.query.second === undefined && req.query.submitted === undefined;
+    if (prefill) {
+      if (req.query.first !== undefined && !normalizeName(req.query.first)) {
+        return showForm(400, "Enter a valid name or number for the first Pokémon.");
+      }
+      return showForm(200);
+    }
+
+    const firstName = normalizeName(req.query.first);
+    const secondName = normalizeName(req.query.second);
+    if (!firstName || !secondName) {
+      return showForm(400, "Enter a valid name or number for both Pokémon.");
+    }
+    if (firstName === secondName) {
+      return showForm(400, "Choose two different Pokémon.");
+    }
+
+    const pair = await Promise.all([getPokemon(firstName), getPokemon(secondName)]);
+  
+    if (pair[0].name === pair[1].name) {
+      return showForm(400, "Choose two different Pokémon.");
+    }
+    return showForm(200, "", pair);
+  } catch (error) {
+    if (!context) return renderError(res, error);
+    const { status, message } = lookupError(error);
+    return showForm(status, message);
   }
 }
