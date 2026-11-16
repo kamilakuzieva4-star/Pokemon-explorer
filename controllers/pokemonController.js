@@ -14,11 +14,9 @@ function normalizeName(value) {
 }
 
 function lookupError(error) {
-  if (error.response?.status === 404) {
-    return { status: 404, message: "Pokémon not found. Check the name or number and try again." };
-  }
-  console.error("Pokémon lookup:", error.message);
-  return { status: 502, message: "Pokémon data could not load. Please try again in a moment." };
+  if (error.publicMessage) return { status: error.status, message: error.publicMessage };
+  console.error("Application:", error.message);
+  return { status: 500, message: "Something went wrong. Please try again in a moment." };
 }
 
 
@@ -36,26 +34,28 @@ function readContext(source = {}) {
   return { page: Number(page), sort, catalogQuery, backUrl: `/?${catalogQuery}` };
 }
 
-function renderError(res, error, context) {
+function renderError(res, error, context, retryUrl) {
   const { status, message } = error.publicMessage
     ? { status: error.status, message: error.publicMessage } : lookupError(error);
   res.status(status).render("error", {
     title: status === 404 ? "Not found" : "Unable to load page",
-    status, message, backUrl: context?.backUrl || "/"
+    status, message, backUrl: context?.backUrl || "/",
+    retryUrl: status >= 500 ? retryUrl : undefined
   });
 }
 
 export async function catalog(req, res) {
+  let context;
   try {
-    const context = readContext(req.query);
+    context = readContext(req.query);
     const result = await getCatalog(context.page);
-    // Sort a copy so changing the order cannot modify the cached page.
+   
     const pokemon = [...result.pokemon].sort(context.sort === "name"
       ? (a, b) => a.name.localeCompare(b.name)
       : (a, b) => a.number - b.number || a.name.localeCompare(b.name));
     res.render("home", { title: "Catalog", ...result, ...context, pokemon });
   } catch (error) {
-    renderError(res, error);
+    renderError(res, error, undefined, context?.backUrl);
   }
 }
 

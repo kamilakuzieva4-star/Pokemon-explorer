@@ -3,6 +3,7 @@ import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import pokemonRoutes from "./routes/pokemonRoutes.js";
+import { notFound, errorHandler } from "./middleware/errors.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,12 +16,9 @@ app.use(express.urlencoded({ extended: false, limit: "2kb" }));
 app.use(pokemonRoutes);
 
 
-app.use((req, res) => {
-  res.status(404).render("error", {
-    title: "Not found", status: 404, message: "This page does not exist."
-  });
-});
+app.use(notFound);
+app.use(errorHandler);
 
-app.listen(port, "127.0.0.1", () => {
-  console.log(`Pokémon Explorer: http://127.0.0.1:${port}`);
+app.listen(port, "localhost", () => {
+  console.log(`Pokémon Explorer: http://localhost:${port}`);
 });

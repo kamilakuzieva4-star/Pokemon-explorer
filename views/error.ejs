@@ -3,6 +3,9 @@
   <p class="number">Error <%= status %></p>
   <h1><%= title %></h1>
   <p><%= message %></p>
+  <% if (typeof retryUrl === "string") { %>
+    <p><a href="<%= retryUrl %>">Retry this page</a></p>
+  <% } %>
   <a href="<%= typeof backUrl === "string" ? backUrl : "/" %>">Back to catalog</a>
 </section>
 <%- include("partials/footer") %>

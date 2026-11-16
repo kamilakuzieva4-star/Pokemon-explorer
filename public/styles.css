@@ -123,3 +123,5 @@ select:focus-visible { outline: 3px solid #627d42; outline-offset: 3px; }
   .comparison th, .comparison td { padding: 8px; }
   .comparison .picture { min-height: 100px; padding: 6px; }
 }
+
+.catalog-notice { margin-bottom: 20px; padding: 12px 16px; background: #eef1e8; border-radius: 8px; }

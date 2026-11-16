@@ -14,6 +14,12 @@
       <button type="submit">Apply</button>
     </form>
   </div>
+  <% if (unavailable > 0) { %>
+    <p class="catalog-notice" role="status">
+      Some Pokémon could not load (<%= unavailable %>).
+      <a href="<%= backUrl %>">Retry this page</a>.
+    </p>
+  <% } %>
   <% if (pokemon.length === 0) { %>
     <p>No Pokémon are available on this page.</p>
   <% } else { %>
