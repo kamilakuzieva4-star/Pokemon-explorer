@@ -11,6 +11,7 @@ export function notFound(req, res) {
   });
 }
 
+// Express recognizes an error middleware by its four arguments.
 export function errorHandler(error, req, res, next) {
   if (res.headersSent) return next(error);
 

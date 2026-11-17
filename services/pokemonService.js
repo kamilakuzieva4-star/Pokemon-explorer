@@ -16,7 +16,7 @@ const validSpecies = (data) => isName(data?.name) &&
   Number.isInteger(nationalNumber(data)) && nationalNumber(data) > 0 && isName(defaultName(data));
 const invalidResponse = () => pageError(502, "PokéAPI returned unexpected data. Please try again.");
 
-
+// Injecting a client lets tests simulate API failures without internet access.
 export function createPokemonService(client = axios.create({
   baseURL: "https://pokeapi.co/api/v2", timeout: 6500
 })) {
@@ -29,6 +29,7 @@ export function createPokemonService(client = axios.create({
     cache.set(key, entry);
   }
 
+  // Cache successful responses and share in-progress requests to the same URL.
   async function request(url, validate) {
     const saved = cache.get(url);
     if (saved && Date.now() < saved.expiresAt) return saved.data;
@@ -38,17 +39,18 @@ export function createPokemonService(client = axios.create({
     const operation = (async () => {
       try {
         const { data } = await client.get(url);
-     
+        // Validate before caching so malformed API responses can recover on retry.
         if (!validate(data)) throw invalidResponse();
         const entry = { data, expiresAt: Date.now() + cacheTime };
         save(url, entry);
-      
+        // Reuse the same response for a Pokemon name and its numeric API ID.
         if (url.startsWith("/pokemon/")) {
           save(`/pokemon/${data.name}`, entry);
           save(`/pokemon/${data.id}`, entry);
         }
         return data;
       } catch (error) {
+        console.error("PokéAPI:", url, error.code || error.response?.status || error.message);
         if (error.publicMessage) throw error;
         if (error.response?.status === 404) {
           throw pageError(404, "Pokémon not found. Check the name or number and try again.");
@@ -74,7 +76,7 @@ export function createPokemonService(client = axios.create({
       data = await request(`/pokemon/${name}`, validPokemon);
     } catch (error) {
       if (error.status !== 404) throw error;
-    
+      // Some species (e.g. Giratina) use a different default form name.
       species = await request(`/pokemon-species/${name}`, (value) =>
         validSpecies(value) && (/^\d+$/.test(name) || value.name === name));
       data = await request(`/pokemon/${defaultName(species)}`, validPokemon);
@@ -94,12 +96,14 @@ export function createPokemonService(client = axios.create({
     };
     return {
       name: data.name,
+      // Form IDs differ from national Pokedex numbers.
       number: nationalNumber(species),
       label: data.name.replaceAll("-", " "),
       image: safeImage(data.sprites?.other?.["official-artwork"]?.front_default) || safeImage(data.sprites?.front_default),
       fallbackImage: safeImage(data.sprites?.front_default),
       types: (Array.isArray(data.types) ? data.types : [])
         .map((entry) => entry?.type?.name).filter(isName).join(", "),
+      // PokéAPI uses decimetres and hectograms; display metres and kilograms.
       height: Number.isFinite(data.height) && data.height >= 0 ? data.height / 10 : null,
       weight: Number.isFinite(data.weight) && data.weight >= 0 ? data.weight / 10 : null,
       hp: stat("hp"), attack: stat("attack"), speed: stat("speed")
@@ -118,6 +122,7 @@ export function createPokemonService(client = axios.create({
     if (page > 1 && offset >= list.count) {
       throw pageError(404, "There is no catalog page with that number.");
     }
+    // Keep successful cards when another request on this page fails.
     const results = await Promise.allSettled(list.results.map((entry) => getPokemon(entry.name)));
     const pokemon = results.filter((result) => result.status === "fulfilled").map((result) => result.value);
     if (results.length > 0 && pokemon.length === 0) throw results[0].reason;

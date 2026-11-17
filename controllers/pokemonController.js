@@ -1,5 +1,6 @@
 import { getCatalog, getPokemon } from "../services/pokemonService.js";
 
+// Accept a name or number, normalize common punctuation, and reject unsafe input.
 function normalizeName(value) {
   if (typeof value !== "string" || value.length > 60) return null;
   const name = value.trim().toLowerCase().normalize("NFD")
@@ -19,7 +20,7 @@ function lookupError(error) {
   return { status: 500, message: "Something went wrong. Please try again in a moment." };
 }
 
-
+// Build return links from validated values instead of trusting a supplied URL.
 function readContext(source = {}) {
   const page = source.page ?? "1";
   const sort = source.sort ?? "number";
@@ -49,7 +50,7 @@ export async function catalog(req, res) {
   try {
     context = readContext(req.query);
     const result = await getCatalog(context.page);
-   
+    // Sort a copy of this page only; leave cached data unchanged.
     const pokemon = [...result.pokemon].sort(context.sort === "name"
       ? (a, b) => a.name.localeCompare(b.name)
       : (a, b) => a.number - b.number || a.name.localeCompare(b.name));
@@ -72,6 +73,7 @@ export async function search(req, res) {
       });
     }
     const pokemon = await getPokemon(name);
+    // Redirect after POST so refreshing the result does not resubmit the form.
     res.redirect(303, `/pokemon/${pokemon.name}?${context.catalogQuery}`);
   } catch (error) {
     if (!context) return renderError(res, error);
@@ -109,7 +111,7 @@ export async function compare(req, res) {
 
   try {
     context = readContext(req.query);
-   
+    // A detail-page link fills the first field without running a comparison.
     const prefill = req.query.second === undefined && req.query.submitted === undefined;
     if (prefill) {
       if (req.query.first !== undefined && !normalizeName(req.query.first)) {
@@ -128,7 +130,7 @@ export async function compare(req, res) {
     }
 
     const pair = await Promise.all([getPokemon(firstName), getPokemon(secondName)]);
-  
+    // A name and a number can identify the same Pokemon, such as Pikachu and 25.
     if (pair[0].name === pair[1].name) {
       return showForm(400, "Choose two different Pokémon.");
     }
