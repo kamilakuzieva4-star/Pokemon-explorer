@@ -5,7 +5,8 @@
   "description": "A student project for exploring Pokemon, built step by step.",
   "type": "module",
   "scripts": {
-    "start": "node app.js"
+    "start": "node server.js",
+    "test": "node --test"
   },
   "engines": {
     "node": ">=20"

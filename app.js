@@ -1,4 +1,3 @@
-import "dotenv/config";
 import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -6,7 +5,6 @@ import pokemonRoutes from "./routes/pokemonRoutes.js";
 import { notFound, errorHandler } from "./middleware/errors.js";
 
 const app = express();
-const port = process.env.PORT || 3000;
 const projectDirectory = path.dirname(fileURLToPath(import.meta.url));
 
 app.set("view engine", "ejs");
@@ -19,6 +17,4 @@ app.use(pokemonRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(port, "localhost", () => {
-  console.log(`Pokémon Explorer: http://localhost:${port}`);
-});
+export default app;

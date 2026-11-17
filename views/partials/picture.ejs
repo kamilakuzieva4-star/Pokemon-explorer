@@ -1,0 +1,9 @@
+<div class="picture<%= large ? " detail-picture" : "" %>">
+  <% if (pokemon.image) { %>
+    <img src="<%= pokemon.image %>" alt="<%= pokemon.label %>"
+      data-fallback="<%= pokemon.fallbackImage || "" %>"
+      width="<%= large ? 280 : 144 %>" height="<%= large ? 280 : 144 %>"
+      loading="<%= lazy ? "lazy" : "eager" %>" decoding="async">
+  <% } %>
+  <span class="image-placeholder" <% if (pokemon.image) { %>hidden<% } %>>Image unavailable</span>
+</div>

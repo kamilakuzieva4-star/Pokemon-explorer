@@ -36,13 +36,7 @@
           <th scope="col">Stat</th>
           <% for (const pokemon of pair) { %>
             <th scope="col">
-              <div class="picture">
-                <% if (pokemon.image) { %>
-                  <img src="<%= pokemon.image %>" alt="<%= pokemon.label %>" width="144" height="144">
-                <% } else { %>
-                  <span>Image unavailable</span>
-                <% } %>
-              </div>
+              <%- include("partials/picture", { pokemon, large: false, lazy: false }) %>
               <p class="number">#<%= pokemon.number %></p>
               <a class="pokemon-name" href="/pokemon/<%= pokemon.name %>?<%= catalogQuery %>"><%= pokemon.label %></a>
             </th>

@@ -2,13 +2,7 @@
 
 <a href="<%= backUrl %>">Back to catalog</a>
 <article class="detail">
-  <div class="picture detail-picture">
-    <% if (pokemon.image) { %>
-      <img src="<%= pokemon.image %>" alt="<%= pokemon.label %>" width="280" height="280">
-    <% } else { %>
-      <span>Image unavailable</span>
-    <% } %>
-  </div>
+  <%- include("partials/picture", { pokemon, large: true, lazy: false }) %>
   <div>
     <p class="number">#<%= pokemon.number %></p>
     <h1 class="detail-name"><%= pokemon.label %></h1>

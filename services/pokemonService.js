@@ -97,6 +97,7 @@ export function createPokemonService(client = axios.create({
       number: nationalNumber(species),
       label: data.name.replaceAll("-", " "),
       image: safeImage(data.sprites?.other?.["official-artwork"]?.front_default) || safeImage(data.sprites?.front_default),
+      fallbackImage: safeImage(data.sprites?.front_default),
       types: (Array.isArray(data.types) ? data.types : [])
         .map((entry) => entry?.type?.name).filter(isName).join(", "),
       height: Number.isFinite(data.height) && data.height >= 0 ? data.height / 10 : null,

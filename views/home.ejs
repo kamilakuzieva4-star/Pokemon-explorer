@@ -27,13 +27,7 @@
       <% for (const entry of pokemon) { %>
         <article class="card">
           <a class="card-link" href="/pokemon/<%= entry.name %>?<%= catalogQuery %>">
-          <div class="picture">
-            <% if (entry.image) { %>
-              <img src="<%= entry.image %>" alt="<%= entry.label %>" width="144" height="144">
-            <% } else { %>
-              <span>Image unavailable</span>
-            <% } %>
-          </div>
+          <%- include("partials/picture", { pokemon: entry, large: false, lazy: true }) %>
           <div class="card-text">
             <span class="number">#<%= entry.number %></span>
             <h3 class="pokemon-name"><%= entry.label %></h3>

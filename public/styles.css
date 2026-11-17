@@ -125,3 +125,9 @@ select:focus-visible { outline: 3px solid #627d42; outline-offset: 3px; }
 }
 
 .catalog-notice { margin-bottom: 20px; padding: 12px 16px; background: #eef1e8; border-radius: 8px; }
+
+
+.picture [hidden] { display: none; }
+.picture .image-placeholder { text-align: center; padding: 12px; }
+.skip-link { z-index: 10; }
+.nav-links a { display: inline-flex; align-items: center; min-height: 44px; }
